@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
 
     public BoardManager boardManager;
 
+    public int playerFoodPoint = 100;
+
+    [HideInInspector] public bool playerTurn = true;
+
+    private int level = 3;
+
     void Awake()
     {
         if (instance == null)
@@ -27,6 +33,11 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         boardManager.SetUpLevel(3);
+    }
+
+    public void GameOver()
+    {
+        enabled = false;
     }
 
     // Start is called before the first frame update
