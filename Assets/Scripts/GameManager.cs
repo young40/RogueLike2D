@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class GameManager : MonoBehaviour
     private List<Enemy> enemies;
     private bool enemiesMoving;
 
+    public float levelStartDelay = 2f;
+
+    private Text levelText;
+    private GameObject levelImage;
+    private bool doingSetup = true;
+
     void Awake()
     {
         if (instance == null)
@@ -29,6 +36,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+
+        levelText.text = "Day " + level;
+
+        Invoke("HideLevelImage", levelStartDelay);
+
         enemies = new List<Enemy>();
 
         DontDestroyOnLoad(gameObject);
@@ -38,8 +52,16 @@ public class GameManager : MonoBehaviour
 
     void InitGame()
     {
+        doingSetup = true;
+
         enemies.Clear();
         boardManager.SetUpLevel(level);
+    }
+
+    void HideLevelImage()
+    {
+        levelImage.SetActive(false);
+        doingSetup = false;
     }
 
     public void GameOver()
@@ -56,7 +78,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerTurn || enemiesMoving)
+        if (playerTurn || enemiesMoving || doingSetup)
         {
             return;
         }

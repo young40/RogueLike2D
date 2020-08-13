@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MoveObject
 {
@@ -10,6 +11,8 @@ public class Player : MoveObject
     public int poingtPerSoda = 20;
 
     public float restartLevelDelay = 1f;
+
+    public Text foodText;
 
     private Animator animator;
     private int food;
