@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MoveObject
 {
@@ -76,7 +77,7 @@ public class Player : MoveObject
     {
         if (other.tag == "Exit")
         {
-            Invoke("Restart", restartLevelDelay);
+            Invoke("ReStart", restartLevelDelay);
             enabled = false;
         }
         else if(other.tag == "Food")
@@ -105,7 +106,7 @@ public class Player : MoveObject
 
     private void ReStart()
     {
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
     public void LoseFood(int loss)
