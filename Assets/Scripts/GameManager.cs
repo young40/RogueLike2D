@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
 
     private int level = 3;
 
+    public float turnDelay = 0.1f;
+    private List<Enemy> enemies;
+    private bool enemiesMoving;
+
     void Awake()
     {
         if (instance == null)
@@ -25,6 +29,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        enemies = new List<Enemy>();
+
         DontDestroyOnLoad(gameObject);
         boardManager = GetComponent<BoardManager>();
         InitGame();
@@ -32,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     void InitGame()
     {
+        enemies.Clear();
         boardManager.SetUpLevel(3);
     }
 
@@ -49,6 +56,37 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerTurn || enemiesMoving)
+        {
+            return;
+        }
+
+        StartCoroutine(MoveEnemies());
+    }
+
+    public void AddEnemyToList(Enemy script)
+    {
+        enemies.Add(script);
+    }
+
+    IEnumerator MoveEnemies()
+    {
+        enemiesMoving = true;
+
+        yield return new WaitForSeconds(turnDelay);
+
+        if (enemies.Count == 0)
+        {
+            yield return new WaitForSeconds(turnDelay);
+        }
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].MoveEnemy();
+            yield return new WaitForSeconds(enemies[i].moveTime);
+        }
+
+        playerTurn = true;
+        enemiesMoving = false;
     }
 }
