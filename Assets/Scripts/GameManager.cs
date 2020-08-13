@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool playerTurn = true;
 
-    private int level = 3;
+    private int level = 1;
 
     public float turnDelay = 0.1f;
     private List<Enemy> enemies;
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         enemies.Clear();
-        boardManager.SetUpLevel(3);
+        boardManager.SetUpLevel(level);
     }
 
     public void GameOver()
