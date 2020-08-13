@@ -14,7 +14,7 @@ public class Enemy : MoveObject
     // Start is called before the first frame update
     protected override void Start()
     {
-        animator = GetComponent<animator>();
+        animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         base.Start();
     }
@@ -27,7 +27,7 @@ public class Enemy : MoveObject
             return;
         }
 
-        base.AttemptMove(xDir, yDir);
+        base.AttemptMove<T>(xDir, yDir);
 
         skipMove = true;
     }
@@ -46,7 +46,7 @@ public class Enemy : MoveObject
             xDir = target.position.x > transform.position.x ? 1 : -1;
         }
 
-        AttemptMove(xDir, yDir);
+        AttemptMove<Player>(xDir, yDir);
     }
 
     protected override void OnCantMove<T>(T component)
