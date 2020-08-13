@@ -18,6 +18,14 @@ public class Player : MoveObject
     private Animator animator;
     private int food;
 
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
+    public AudioClip eatSound1;
+    public AudioClip eatSound2;
+    public AudioClip drinkSound1;
+    public AudioClip drinkSound2;
+    public AudioClip gameoverSound;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -85,6 +93,8 @@ public class Player : MoveObject
             food += pointPerFood;
             foodText.text = "+ " + pointPerFood + " Food: " + food;
 
+            SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
+
             other.gameObject.SetActive(false);
         }
         else if(other.tag == "Soda")
@@ -92,6 +102,7 @@ public class Player : MoveObject
             food += poingtPerSoda;
             foodText.text = "+ " + poingtPerSoda + " Food: " + food;
 
+            SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound2);
             other.gameObject.SetActive(false);
         }
     }
