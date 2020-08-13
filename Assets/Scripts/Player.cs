@@ -23,6 +23,7 @@ public class Player : MoveObject
         animator = GetComponent<Animator>();
 
         food = GameManager.instance.playerFoodPoint;
+        foodText.text = "Food: " + food;
 
         base.Start();
     }
@@ -60,6 +61,7 @@ public class Player : MoveObject
     protected override void AttemptMove<T>(int xDir, int yDir)
     {
         food--;
+        foodText.text = "Food: " + food;
 
         base.AttemptMove<T>(xDir, yDir);
 
@@ -80,11 +82,15 @@ public class Player : MoveObject
         else if(other.tag == "Food")
         {
             food += pointPerFood;
+            foodText.text = "+ " + pointPerFood + " Food: " + food;
+
             other.gameObject.SetActive(false);
         }
         else if(other.tag == "Soda")
         {
             food += poingtPerSoda;
+            foodText.text = "+ " + poingtPerSoda + " Food: " + food;
+
             other.gameObject.SetActive(false);
         }
     }
@@ -106,6 +112,8 @@ public class Player : MoveObject
     {
         animator.SetTrigger("playerHit");
         food -= loss;
+        foodText.text = "- " + loss + " Food: " + food;
+
         CheckIfGameOver();
     }
 
