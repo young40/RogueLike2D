@@ -37,11 +37,12 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        DontDestroyOnLoad(gameObject);
 
         enemies = new List<Enemy>();
 
-        DontDestroyOnLoad(gameObject);
         boardManager = GetComponent<BoardManager>();
+        Debug.Log("22222");
         InitGame();
     }
 
@@ -53,11 +54,12 @@ public class GameManager : MonoBehaviour
 
     static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        Debug.Log(arg0.name);
+
         if (arg0.name != "SampleScene")
         {
             return;
         }
-        Debug.Log(arg0.name);
 
         instance.level++;
         instance.InitGame();

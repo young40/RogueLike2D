@@ -85,7 +85,6 @@ public class Player : MoveObject
     {
         if (other.tag == "Exit")
         {
-            Debug.Log("Exxxxxx");
             Invoke("ReStart", restartLevelDelay);
             enabled = false;
         }
