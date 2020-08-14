@@ -76,6 +76,11 @@ public class Player : MoveObject
 
         RaycastHit2D hit2D;
 
+        // if (Move(xDir, yDir, out hit2D))
+        {
+            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+        }
+
         CheckIfGameOver();
 
         GameManager.instance.playerTurn = false;
@@ -133,6 +138,7 @@ public class Player : MoveObject
     {
         if (food <= 0)
         {
+            SoundManager.instance.PlaySingle(gameoverSound);
             GameManager.instance.GameOver();
         }
     }
