@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,12 +37,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        levelImage = GameObject.Find("LevelImage");
-        levelText = GameObject.Find("LevelText").GetComponent<Text>();
-
-        levelText.text = "Day " + level;
-
-        Invoke("HideLevelImage", levelStartDelay);
 
         enemies = new List<Enemy>();
 
@@ -50,12 +45,37 @@ public class GameManager : MonoBehaviour
         InitGame();
     }
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static public void CallbackInitialization()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.name != "SampleScene")
+        {
+            return;
+        }
+        Debug.Log(arg0.name);
+
+        instance.level++;
+        instance.InitGame();
+    }
+
     void InitGame()
     {
         doingSetup = true;
 
         enemies.Clear();
         boardManager.SetUpLevel(level);
+
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+
+        levelText.text = "Day " + level;
+
+        Invoke("HideLevelImage", levelStartDelay);
     }
 
     void HideLevelImage()
