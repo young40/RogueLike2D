@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     private Text levelText;
     private GameObject levelImage;
+    private GameObject gameOver;
     private bool doingSetup = true;
 
     void Awake()
@@ -42,7 +43,6 @@ public class GameManager : MonoBehaviour
         enemies = new List<Enemy>();
 
         boardManager = GetComponent<BoardManager>();
-        Debug.Log("22222");
         InitGame();
     }
 
@@ -73,9 +73,11 @@ public class GameManager : MonoBehaviour
         boardManager.SetUpLevel(level);
 
         levelImage = GameObject.Find("LevelImage");
+        gameOver = GameObject.Find("TextGameOver");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
 
         levelText.text = "Day " + level;
+        gameOver.SetActive(false);
 
         Invoke("HideLevelImage", levelStartDelay);
     }
@@ -89,6 +91,10 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         enabled = false;
+
+        levelImage.SetActive(true);
+        GameObject.Find("LevelText").SetActive(false);
+        gameOver.SetActive(true);
     }
 
     // Start is called before the first frame update
