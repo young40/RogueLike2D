@@ -16,7 +16,7 @@ public class SoundManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = null;
+            instance = this;
         } 
         else if (instance != this)
         {
